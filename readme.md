@@ -1,2 +1,2 @@
 # Aim
-To simulate the experiments with the 40mm target
+To simulate the experiments with the 60mm target. This is the master simulation setup. To run in ubuntu 20.04 which has yade-2020.01a installed from the repo use run.sh. To run in ubuntu 18.04, which requires to have yade-2020.01a compiled, use run-2020.01a.sh
