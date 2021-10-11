@@ -15,20 +15,37 @@ input_data_start_index = 0
 
 if simulation_mode == 'single':
     ID  = 1
-    file_name = "Exp_20_04_C001H001S0001"
-    x_pos = 13.9e-3
+    file_name = "Exp_60_01_C001H001S0001"
+    x_pos = 31.6e-3
+    z_pos = 63.5e-3
+    brush_orien = pi/2
+    young = 2.7e6
+    density = 1700
+    root_radius = 1e-3
+    radii_diff = 0.5e-3
 
 elif simulation_mode == 'batch':
     readParamsFromTable(
         ID  = 1,
-        file_name = "Exp_20_04_C001H001S0001",
-        x_pos = 13.9e-3
-        )
+        file_name = "Exp_60_01_C001H001S0001",
+        x_pos = 31.6e-3,
+        z_pos = 63.5e-3,
+        brush_orien = pi/2,
+        young = 2.7e6,
+        density = 1700,
+        root_radius = 1e-3,
+        radii_diff = 0.5e-3
+    )
     from yade.params.table import *
 
 # ----------------------------------------------------- Experiment data
 bristle_tip_pos_y  =  x_pos
-bristle_tip_pos_z  =  63.5e-3
+
+if brush_orien == 0: # if brush is vertical
+    bristle_tip_pos_z = z_pos - 18e-3 # I dont know by BDI it works
+
+else: 
+    bristle_tip_pos_z = z_pos 
 
 
 with open(
@@ -44,13 +61,13 @@ with open('damping_model.json', 'r') as jsonfile:
 fps = exp_data["fps"]
 dt  = 1/fps 
 # ----------------------------------------------------- brush
-bristle_radius_root    = 1e-3 
-bristle_radius_diff    = 0.5e-3
+bristle_radius_root    = root_radius
+bristle_radius_diff    = radii_diff
 bristle_length         = 35e-3
 bristle_no_of_segments = 12
 
-bristle_young    = 3.2e6
-bristle_density  = 1250
+bristle_young    = young
+bristle_density  = density
 bristle_poisson  = 0.48
 bristle_friction = radians(44)
 bristle_damping  = 0
@@ -164,7 +181,7 @@ brush_position = [
     bristle_tip_pos_y + bristle_length, 
     bristle_tip_pos_z + brush_height/2.0
     ]
-orientation    = Quaternion((0,1,0), 0) * Quaternion((0,0,1), -pi/2) * Quaternion((0,1,0), pi/2)
+orientation    = Quaternion((0,1,0), brush_orien) * Quaternion((0,0,1), -pi/2) * Quaternion((0,1,0), pi/2)
 
 
 brush_x_no_density = 1 / bristles_dx
