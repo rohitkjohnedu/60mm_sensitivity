@@ -466,15 +466,6 @@ O.engines += [
     )
 ]
 
-# ----------------------------------------------------- stopper
-O.engines += [
-    PyRunner(
-        command    = 'stopper()',
-        iterPeriod = 1600000,
-        label      = 'StopperEngine' 
-    )
-]
-
 def stopper():
     result_dict               = {}
     result_dict['parameters'] = getParameters(globals())
